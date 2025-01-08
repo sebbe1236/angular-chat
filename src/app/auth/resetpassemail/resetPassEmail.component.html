@@ -1,0 +1,32 @@
+<p>resetpassword works!</p>
+<form [formGroup]="resetPasswordForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Username</label>
+    <input
+      formControlName="username"
+      type="text"
+      class="form-control"
+      id="exampleFormControlInput1"
+      placeholder="username"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label"
+      >Email address</label
+    >
+    <input
+      formControlName="email"
+      type="email"
+      class="form-control"
+      id="exampleFormControlInput1"
+      placeholder="name@example.com"
+    />
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="!resetPasswordForm.valid"
+  >
+    Send
+  </button>
+</form>

@@ -14,10 +14,12 @@ export class ChatComponent {
   messages: string[] = [];
 
   getSocketStatus() {
+    console.log(`Socket status is: ${this.socketService.socket.connected}`);
     return this.socketService.connectSocket();
   }
 
   ngOnInit() {
+    console.log('Chat component initialized');
     this.getSocketStatus();
   }
 }

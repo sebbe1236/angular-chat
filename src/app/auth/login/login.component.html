@@ -1,23 +1,44 @@
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input
-      type="email"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-    />
-    <div id="emailHelp" class="form-text">
-      We'll never share your email with anyone else.
+<p>login works!</p>
+<div class="login_container_template">
+  <div class="buttons_container">
+    <nav>
+      <ul>
+        <li>
+          <a
+            routerLink="/createUser"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Create user</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="login_container">
+      <label for="uname"><b>Username</b></label>
+      <input
+        type="text"
+        placeholder="Enter Username"
+        name="uname"
+        required
+        formControlName="username"
+      />
+
+      <label for="psw"><b>Password</b></label>
+      <input
+        type="password"
+        placeholder="Enter Password"
+        required
+        formControlName="password"
+      />
+      <div>
+        <button type="submit">
+          <a routerLink="/forgotPassword">Forgot password</a>
+        </button>
+        <button type="submit">Login</button>
+      </div>
     </div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" />
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  </form>
+</div>

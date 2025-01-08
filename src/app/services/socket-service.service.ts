@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SocketService {
-  private socket: Socket;
+  public socket: Socket;
   private socketUrl: string = environment.socketUrl;
   public messages$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
     []
@@ -19,9 +19,17 @@ export class SocketService {
       transports: environment.transport, // Force WebSocket transport
     });
   }
+
   connectSocket() {
-    this.socket.connect();
-    console.log('Connected to socket');
+    this.socket.on('connect', () => {
+      console.log('Connected to server:', this.socket.connected);
+    });
+  }
+
+  disconnectedSocket() {
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from server:', this.socket.disconnected);
+    });
   }
 
   // emit message to server
