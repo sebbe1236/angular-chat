@@ -2,16 +2,32 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service.service';
 import { Router, RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { SocketService } from '../../services/socket-service.service';
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  providers: [SocketService],
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder);
-  constructor(private authService: AuthService, private router: Router) {}
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  constructor() {}
 
   loginForm = this.formBuilder.group({
     username: ['', Validators.required],

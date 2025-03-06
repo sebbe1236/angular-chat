@@ -1,43 +1,38 @@
 <p>login works!</p>
 <div class="login_container_template">
-  <div class="buttons_container">
-    <nav>
-      <ul>
-        <li>
-          <a
-            routerLink="/createUser"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-            >Create user</a
-          >
-        </li>
-      </ul>
-    </nav>
+  <div>
+    <section>
+      <div class="example-button-row">
+        <div class="example-flex-container">
+          <div class="example-button-container"></div>
+
+          <div class="example-button-container">
+            <a mat-fab extended>
+              <mat-icon>favorite</mat-icon>
+              <a routerLink="/forgotPassword">Forgot password</a>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="login_container">
-      <label for="uname"><b>Username</b></label>
-      <input
-        type="text"
-        placeholder="Enter Username"
-        name="uname"
-        required
-        formControlName="username"
-      />
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" />
+      </mat-form-field>
 
-      <label for="psw"><b>Password</b></label>
-      <input
-        type="password"
-        placeholder="Enter Password"
-        required
-        formControlName="password"
-      />
       <div>
-        <button type="submit">
+        <button mat-flat-button>
           <a routerLink="/forgotPassword">Forgot password</a>
         </button>
-        <button type="submit">Login</button>
+        <button mat-flat-button type="submit">Login</button>
       </div>
     </div>
   </form>

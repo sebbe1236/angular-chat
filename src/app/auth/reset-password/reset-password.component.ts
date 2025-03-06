@@ -5,22 +5,20 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-reset-password',
-  standalone: true,
   imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
 })
 export class ResetPasswordComponent {
   formBuilder = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
   successMessage: string = '';
   currentUser: string = '';
   // token property to get token from url to send with request.
   token: string = '';
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
+
+  constructor() {}
 
   resetPasswordForm = this.formBuilder.group({
     newPassword: ['', [Validators.required, Validators.minLength(5)]],

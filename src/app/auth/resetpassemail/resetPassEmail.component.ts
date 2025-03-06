@@ -4,14 +4,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-resetpassword',
-  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './resetPassEmail.component.html',
   styleUrl: './resetPassEmail.component.css',
 })
 export class ResetpasswordComponent {
   private formBuilder = inject(FormBuilder);
-  constructor(private authService: AuthService) {}
+  private authService = inject(AuthService);
+  constructor() {}
 
   resetPasswordForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],

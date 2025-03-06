@@ -1,1 +1,10 @@
 <p>chat works!</p>
+@if(token !== null) {
+<button mat-mini-fab aria-label="logout" (click)="logOut()">
+  <mat-icon>home</mat-icon>
+  Logout
+</button>
+
+<app-chatroom></app-chatroom>
+
+}
