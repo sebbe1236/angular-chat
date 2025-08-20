@@ -4,3 +4,60 @@
     <button mat-button (click)="createRoom()">Create chatroom</button>
   </div>
 </section>
+<section>
+  <div class="example-label">Chat rooms</div>
+  <div class="example-button-row">
+    <button mat-button (click)="toggleRooms()">View all rooms</button>
+  </div>
+  @for(chatRoom of allRooms; track chatRoom.roomId) { @if(viewRooms) {
+  <div class="chat-box">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Room ID: {{ chatRoom.roomId }}</mat-card-title>
+        <mat-card-subtitle
+          >Created by: {{ chatRoom.createdBy }}</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div class="messages"></div>
+      </mat-card-content>
+
+      <mat-label>Leave a comment</mat-label>
+      <form>
+        <mat-form-field appearance="outline">
+          <mat-label>Message</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="chatRoom.message"
+            name="message-{{ chatRoom.roomId }}"
+            placeholder="Type your message..."
+          ></textarea>
+        </mat-form-field>
+        <div class="messages">
+          @if(chatRoom.messages) { @for(message of chatRoom.messages; track
+          message) {
+          <div class="message">
+            <strong>{{ message }}</strong>
+          </div>
+          } }
+        </div>
+        <button
+          mat-icon-button
+          type="button"
+          (click)="sendMessage(chatRoom.roomId, chatRoom.message)"
+        >
+          <mat-icon>send</mat-icon>
+        </button>
+        <button
+          mat-button
+          type="button"
+          (click)="joinRoom($index.toString(), chatRoom.roomId)"
+        >
+          join room
+        </button>
+        <button mat-button type="button">leave room</button>
+      </form>
+    </mat-card>
+  </div>
+  } }
+</section>

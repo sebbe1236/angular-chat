@@ -9,9 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SocketService {
   public socket!: Socket;
   private socketUrl: string = environment.socketUrl;
-  public messages$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
-    []
-  );
+  public messages$: BehaviorSubject<
+    { username: string; message: string; timeStamp: string }[]
+  > = new BehaviorSubject<
+    { username: string; message: string; timeStamp: string }[]
+  >([]);
 
   constructor() {
     this.connect();
@@ -27,6 +29,10 @@ export class SocketService {
         token: token,
       },
       transports: environment.transport, // Force WebSocket transport
+    });
+
+    this.socket.on('user-joined', (data) => {
+      console.log('User joined', data);
     });
 
     this.socket.on('connect', () => {
@@ -47,16 +53,12 @@ export class SocketService {
     });
   }
 
+  // get all active users currently in socket
   getActiveUsers(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('active users', (activeUsers: any) => {
         observer.next(activeUsers);
-        console.log('Active users:', activeUsers);
       });
-      // return () => {
-      //   console.log('Unsubscribing from active users list in socket');
-      //   this.socket.off('active Users');
-      // };
     });
   }
   // Listen to events from server
@@ -71,10 +73,46 @@ export class SocketService {
       };
     });
   }
+  // Listen for messages from server
+  listenForMessages(): Observable<{
+    username: string;
+    message: string;
+    timeStamp: string;
+  }> {
+    console.log('Listening for messages from server');
+    return new Observable((observer) => {
+      this.socket.on(
+        'sent-by',
+        (message: {
+          username: string;
+          message: string;
+          roomId: string;
+          timeStamp: string;
+        }) => {
+          console.log('Received message:', message);
+
+          // Update the BehaviorSubject with the new message
+          this.messages$.next([...this.messages$.getValue(), message]);
+
+          // Notify the observer with the new message
+          observer.next(message);
+        }
+      );
+
+      return () => {
+        console.log('Unsubscribing from send-message in socket');
+        this.socket.off('send-message');
+      };
+    });
+  }
 
   // Send events to server
   emitEvent(event: string, data: any): void {
     console.error('Emitting event:', event, 'with data:', data);
-    this.socket.emit(event, data);
+    if (!data) {
+      console.error('Data is undefined or null');
+    } else {
+      this.socket.emit(event, data);
+    }
   }
 }
