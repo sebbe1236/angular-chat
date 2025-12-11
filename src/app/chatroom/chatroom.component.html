@@ -9,7 +9,7 @@
   <div class="example-button-row">
     <button mat-button (click)="toggleRooms()">View all rooms</button>
   </div>
-  @for(chatRoom of allRooms; track chatRoom.roomId) { @if(viewRooms) {
+  @for(chatRoom of allRooms(); track chatRoom.roomId) { @if(viewRooms()) {
   <div class="chat-box">
     <mat-card>
       <mat-card-header>
